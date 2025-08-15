@@ -15,23 +15,23 @@ export default function Works() {
   const overlayRef = useRef([]);
   const projectRef = useRef([]);
   const previewImgRef = useRef(null);
-  const [isBadConnection, setIsBadConnection] = useState(false);
+  // const [isBadConnection, setIsBadConnection] = useState(false);
   const [isImageLoading, setIsImageLoading] = useState(false);
 
-  useEffect(() => {
-    const connection =
-      navigator.connection ||
-      navigator.mozConnection ||
-      navigator.webkitConnection || "4g";
-    if (connection) {
-      if (
-        connection.effectiveType === "slow-2g" ||
-        connection.effectiveType === "2g"
-      ) {
-        setIsBadConnection(true);
-      }
-    }
-  }, []);
+  // useEffect(() => {
+  //   const connection =
+  //     navigator.connection ||
+  //     navigator.mozConnection ||
+  //     navigator.webkitConnection || "4g";
+  //   if (connection) {
+  //     if (
+  //       connection.effectiveType === "slow-2g" ||
+  //       connection.effectiveType === "2g"
+  //     ) {
+  //       setIsBadConnection(true);
+  //     }
+  //   }
+  // }, []);
 
   const mouse = useRef({ x: 0, y: 0 });
 
@@ -228,7 +228,7 @@ export default function Works() {
                   decoding="async"
                 />
                 <img
-                  src={!isBadConnection ? project.image : project.image.replace(".png", "-min.png").replace(".jpg", "-min.jpg").replace(".jpeg", "-min.jpeg")}
+                  src={project.image}
                   alt={`${project.name} project preview`}
                   className="bg-center absolute inset-0 top-20 sm:px-14 rounded-xl"
                   loading="lazy"

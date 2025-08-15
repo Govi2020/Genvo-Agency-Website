@@ -70,8 +70,8 @@ export const projects = [
     description:
       "Bank website landing page which is responsive for any device size",
     link: "https://easybank-landing-page-tailwind.netlify.app/",
-    image: "/assets/projects/easy_bank.png",
-    bgImage: "/assets/backgrounds/blanket.jpg",
+    image: "/assets/projects/easy_bank.webp",
+    bgImage: "/assets/backgrounds/blanket.webp",
     frameworks: [
       { id: 1, name: "Vite" },
       { id: 2, name: "Vanilla JS" },
@@ -83,8 +83,8 @@ export const projects = [
     name: "Music Listening App",
     description: "A website which integrates shazam's API deliver songs",
     link: "https://music-lyriks.vercel.app/",
-    image: "/assets/projects/music-app.png",
-    bgImage: "/assets/backgrounds/table.jpg",
+    image: "/assets/projects/music-app.webp",
+    bgImage: "/assets/backgrounds/table.webp",
     frameworks: [
       { id: 1, name: "React" },
       { id: 2, name: "Redux" },
@@ -98,8 +98,8 @@ export const projects = [
     description:
       "Landing Page with emphasizes the simplicity such a large just needs for a landing page",
     link: "https://manage-landing-page-tailwind.netlify.app/",
-    image: "/assets/projects/manage.png",
-    bgImage: "/assets/backgrounds/curtains.jpg",
+    image: "/assets/projects/manage.webp",
+    bgImage: "/assets/backgrounds/curtains.webp",
     frameworks: [
       { id: 1, name: "Vanilla Js" },
       { id: 2, name: "TailwindCSS" },
@@ -111,8 +111,8 @@ export const projects = [
     description:
       "A Social Media Platform with all of it's bare bone features and live chatting with web sockets",
     link: "https://govi-social.netlify.app/",
-    image: "/assets/projects/social_media.png",
-    bgImage: "/assets/backgrounds/map.jpg",
+    image: "/assets/projects/social_media.webp",
+    bgImage: "/assets/backgrounds/map.webp",
     frameworks: [
       { id: 1, name: "MERN Stack" },
       { id: 2, name: "React js" },
@@ -127,8 +127,8 @@ export const projects = [
     description:
       "A full stack app which uses best practices both on front and backend with stat's for the user",
     link: "https://g-share.vercel.app/",
-    image: "/assets/projects/g_share.png",
-    bgImage: "/assets/backgrounds/curtains.jpg",
+    image: "/assets/projects/g_share.webp",
+    bgImage: "/assets/backgrounds/curtains.webp",
     frameworks: [
       { id: 1, name: "Vite" },
       { id: 2, name: "Node js" },
@@ -143,8 +143,8 @@ export const projects = [
     description:
       "Personal portfolio which elegantly highlights a persons experience and passion",
     link: "https://govi2020-profolio.vercel.app/",
-    image: "/assets/projects/portfolio.png",
-    bgImage: "/assets/backgrounds/poster.jpg",
+    image: "/assets/projects/portfolio.webp",
+    bgImage: "/assets/backgrounds/poster.webp",
     frameworks: [
       { id: 1, name: "Nextjs" },
       { id: 2, name: "Reactjs" },
