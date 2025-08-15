@@ -1,15 +1,31 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { _numWithUnitExp } from "gsap/gsap-core";
 import { ScrollTrigger } from "gsap/all";
 import { useGSAP } from "@gsap/react";
 
 gsap.registerPlugin(ScrollTrigger);
+
 const CustomCursor = () => {
   const cursorRef = useRef(null);
   const followerRef = useRef(null);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
 
   useEffect(() => {
+    // Check for reduced motion preference
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e) => setPrefersReducedMotion(e.matches);
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  useEffect(() => {
+    // Don't add cursor effects if user prefers reduced motion
+    if (prefersReducedMotion) return;
+
     const move = (e) => {
       gsap.to(cursorRef.current, {
         x: e.clientX,
@@ -59,9 +75,11 @@ const CustomCursor = () => {
       window.removeEventListener("mousedown", click);
       window.removeEventListener("mouseup", click);
     };
-  }, []);
+  }, [prefersReducedMotion]);
 
   useGSAP(() => {
+    if (prefersReducedMotion) return;
+    
     gsap.to(cursorRef.current, {
       backgroundColor: "white",
       scrollTrigger: {
@@ -71,17 +89,22 @@ const CustomCursor = () => {
         toggleActions: "play reverse play reverse",
       },
     });
-  },[]);
+  }, [prefersReducedMotion]);
+
+  // Don't render cursor if user prefers reduced motion
+  if (prefersReducedMotion) return null;
 
   return (
     <>
       <div
         ref={followerRef}
         className="fixed md:block hidden top-0 left-0 w-14 h-14 border border-yellow-50 bg-white/30 backdrop-blur rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 z-[9998]"
+        aria-hidden="true"
       ></div>
       <div
         ref={cursorRef}
         className="fixed md:block hidden top-0 left-0 w-2.5 h-2.5 bg-black rounded-full pointer-events-none -translate-x-1/2 -translate-y-1/2 z-[9999]"
+        aria-hidden="true"
       ></div>
     </>
   );
