@@ -14,7 +14,7 @@ function NavBar() {
   const tl = useRef(null);
   const Icontl = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [isTop,setIsTop] = useState(true);
+  const [isTop, setIsTop] = useState(true);
   const [showBurger, setShowBurger] = useState(false);
 
   useGSAP(() => {
@@ -50,26 +50,33 @@ function NavBar() {
         "<+0.2"
       );
 
-    Icontl.current = gsap.timeline({ paused: true }).to(topLineRef.current, {
-      rotate: 45,
-      y: 3.3,
-      duration: 0.3,
-      ease: "power2.inOut",
-    }).to(bottomLineRef.current, {
-      rotate: -45,
-      y: -3.3,
-      duration: .3,
-      ease: "power2.inOut"
-    },"<");
-  },[]);
+    Icontl.current = gsap
+      .timeline({ paused: true })
+      .to(topLineRef.current, {
+        rotate: 45,
+        y: 3.3,
+        duration: 0.3,
+        ease: "power2.inOut",
+      })
+      .to(
+        bottomLineRef.current,
+        {
+          rotate: -45,
+          y: -3.3,
+          duration: 0.3,
+          ease: "power2.inOut",
+        },
+        "<"
+      );
+  }, []);
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
-      setShowBurger(currentScrollY < 30  || currentScrollY <= lastScrollY );
-      setIsTop(currentScrollY < 40)
+      setShowBurger(currentScrollY < 30 || currentScrollY <= lastScrollY);
+      setIsTop(currentScrollY < 40);
 
       lastScrollY = currentScrollY;
     };
@@ -79,7 +86,7 @@ function NavBar() {
     window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
-  },[]);
+  }, []);
 
   const toggleMenu = () => {
     if (isOpen) {
@@ -107,7 +114,6 @@ function NavBar() {
                   offset={0}
                   duration={2000}
                   smooth
-
                   className="transition-all cursor-pointer duration-300 hover:text-white w-full block"
                 >
                   {section}
@@ -128,7 +134,7 @@ function NavBar() {
           </div>
           <div className="font-light">
             <p className="tracking-wider text-white/50">Social Media</p>
-            <div className="flex flex-col flex-wrapi gap-x-2 md:flex-row">
+            <div className="flex flex-col flex-wrap gap-x-2 md:flex-row">
               {socials.map((social, index) => {
                 return (
                   <a
@@ -149,7 +155,7 @@ function NavBar() {
       <div
         onClick={toggleMenu}
         style={
-          (showBurger || isOpen)
+          showBurger || isOpen
             ? { clipPath: "circle(50% at 50% 50%)" }
             : { clipPath: "circle(0% at 50% 50%)" }
         }
@@ -166,12 +172,12 @@ function NavBar() {
       </div>
       <img
         style={
-          ((showBurger && isTop) || (isOpen))
+          ((!isOpen && isTop))
             ? { clipPath: "circle(50% at 50% 50%)" }
             : { clipPath: "circle(0% at 50% 50%)" }
         }
-        src="images/gevano.png"
-        className="fixed top-4 bg-transparent left-10 z-50 flex flex-col items-center justify-center gap-1 transition-all duration-300 rounded-full cursor-pointer w-[120px] h-[120px]"
+        src="images/Genvo-Logo.png"
+        className="fixed top-4 bg-transparent left-10 z-50 flex flex-col items-center justify-center gap-1 transition-all duration-300 rounded-full cursor-pointer w-[140px] h-[140px]"
       />
     </>
   );

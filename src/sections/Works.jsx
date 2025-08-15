@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AnimatedHeaderSection from "../components/AnimatedHeaderSection";
 import { projects as project, projects } from "../constents";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -14,6 +14,24 @@ export default function Works() {
   const previewRef = useRef(null);
   const overlayRef = useRef([]);
   const projectRef = useRef([]);
+  const previewImgRef = useRef(null);
+  const [isBadConnection, setIsBadConnection] = useState(false);
+  const [isImageLoading, setIsImageLoading] = useState(false);
+
+  useEffect(() => {
+    const connection =
+      navigator.connection ||
+      navigator.mozConnection ||
+      navigator.webkitConnection || "4g";
+    if (connection) {
+      if (
+        connection.effectiveType === "slow-2g" ||
+        connection.effectiveType === "2g"
+      ) {
+        setIsBadConnection(true);
+      }
+    }
+  }, []);
 
   const mouse = useRef({ x: 0, y: 0 });
 
@@ -34,22 +52,39 @@ export default function Works() {
     gsap.from(projectRef.current, {
       y: 100,
       opacity: 0,
-      delay: .6,
-      duration: .7,
-      stagger: .1,
+      delay: 0.6,
+      duration: 0.7,
+      stagger: 0.1,
       ease: "back.out",
       scrollTrigger: {
-        trigger: "#project-list"
-      }
-    })
-
+        trigger: "#project-list",
+      },
+    });
   });
 
   const handleMouseEnter = (index) => {
     if (window.innerWidth < 768) return;
-    setCurrentIndex(index);
-
     const el = overlayRef.current[index];
+
+    // Show skeleton and start loading
+    setIsImageLoading(true);
+    
+    if (previewImgRef.current) {
+      // Create new image to preload
+      const img = new Image();
+      img.onload = () => {
+        if (previewImgRef.current) {
+          previewImgRef.current.src = projects[index].image;
+          setIsImageLoading(false);
+        }
+      };
+      img.onerror = () => {
+        // Handle image load error
+        setIsImageLoading(false);
+        console.warn(`Failed to load image for project: ${projects[index].name}`);
+      };
+      img.src = projects[index].image;
+    }
 
     gsap.killTweensOf(el);
 
@@ -62,7 +97,7 @@ export default function Works() {
         clipPath: "polygon(0 0, 100% 0,100% 100%,0 100%)",
         duration: 0.15,
         ease: "power2.out",
-      },
+      }
     );
 
     gsap.to(previewRef.current, {
@@ -85,7 +120,6 @@ export default function Works() {
 
   const handleMouseLeave = (index) => {
     if (window.innerWidth < 768) return;
-    setCurrentIndex(null);
     gsap.to(previewRef.current, {
       opacity: 0,
       scale: 0.95,
@@ -104,7 +138,12 @@ export default function Works() {
     });
   };
 
-  const [currentIndex, setCurrentIndex] = useState(null);
+  useEffect(() => {
+    projects.forEach((p) => {
+      const img = new Image();
+      img.src = p.image;
+    });
+  }, []);
 
   return (
     <section id="work" className="flex flex-col min-h-screen">
@@ -125,7 +164,7 @@ export default function Works() {
           return (
             <a
               key={project.id}
-              ref={(el) => projectRef.current[index] = el}
+              ref={(el) => (projectRef.current[index] = el)}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave(index)}
               href={project.link}
@@ -150,7 +189,7 @@ export default function Works() {
               <div className="w-full h-0.5 bg-black/80" />
 
               {/* Framework */}
-              <div className="flex flex-wrap px-10 text-xs leading-loose uppercase transtion-all duration-500 md:text-sm gap-x-5 md:group-hover:px-12">
+              <div className="flex flex-wrap px-10 text-xs leading-loose uppercase transition-all duration-500 md:text-sm gap-x-5 md:group-hover:px-12">
                 {project.frameworks.map((framework) => {
                   return (
                     <p
@@ -164,14 +203,14 @@ export default function Works() {
               </div>
 
               {/* Mobile Preview Image */}
-              <div className="relative flex overflow-hidden items-center jusitfy-center px-10 md:hidden h-[400px]">
+              <div className="relative flex overflow-hidden items-center justify-center px-10 md:hidden h-[400px]">
                 <img
                   src={project.bgImage}
                   alt={`${project.name}-bg-image`}
                   className="object-cover w-full h-full rounded-md brightness-50"
                 />
                 <img
-                  src={project.image}
+                  src={!isBadConnection ? project.image : project.image.replace(".png", "-min.png").replace(".jpg", "-min.jpg").replace(".jpeg", "-min.jpeg")}
                   alt={`${project.name}-bg-image`}
                   className="bg-center absolute inset-0 top-20 sm:px-14 rounded-xl"
                 />
@@ -185,15 +224,102 @@ export default function Works() {
           ref={previewRef}
           className="fixed -top-0 left-0 z-50 overflow-hidden border-8 border-black pointer-events-none w-[960px] md:block hidden opacity-0"
         >
-          {currentIndex !== null && (
-            <img
-              src={projects[currentIndex].image}
-              alt="preview"
-              className="object-cover w-full h-full"
-            />
+          {/* Skeleton Loading */}
+          {isImageLoading && (
+            <div className="absolute inset-0 bg-gradient-to-br from-[#e5e5e0] via-[#f5f5f0] to-[#e0e0db]">
+              {/* Subtle shimmer effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent animate-shimmer"></div>
+              
+              {/* Elegant loading element */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="relative" style={{ animation: 'float 3s ease-in-out infinite' }}>
+                  {/* Main geometric shape - matches the minimalist vibe */}
+                  <div 
+                    className="w-16 h-16 border-2 border-[#cfa355] rounded-lg"
+                    style={{ animation: 'diamond-rotate 4s linear infinite' }}
+                  ></div>
+                  
+                  {/* Inner accent with brand gold */}
+                  <div 
+                    className="absolute inset-2 w-12 h-12 bg-gradient-to-br from-[#cfa355]/20 to-[#cfa355]/10 rounded"
+                    style={{ animation: 'diamond-inner 3s ease-in-out infinite' }}
+                  ></div>
+                  
+                  {/* Subtle dot indicator */}
+                  <div className="absolute -bottom-8 left-1/2 transform -translate-x-1/2 w-1.5 h-1.5 bg-[#8b8b73] rounded-full animate-pulse"></div>
+                </div>
+              </div>
+              
+              {/* Minimalist corner accents */}
+              <div className="absolute top-4 left-4 w-1 h-1 bg-[#393632] opacity-40"></div>
+              <div className="absolute top-4 right-4 w-1 h-1 bg-[#393632] opacity-40"></div>
+              <div className="absolute bottom-4 left-4 w-1 h-1 bg-[#393632] opacity-40"></div>
+              <div className="absolute bottom-4 right-4 w-1 h-1 bg-[#393632] opacity-40"></div>
+              
+              {/* Subtle line accents */}
+              <div className="absolute top-1/2 left-8 w-8 h-px bg-gradient-to-r from-transparent via-[#8b8b73]/30 to-transparent"></div>
+              <div className="absolute top-1/2 right-8 w-8 h-px bg-gradient-to-l from-transparent via-[#8b8b73]/30 to-transparent"></div>
+            </div>
           )}
+          
+          <img
+            ref={previewImgRef}
+            src=""
+            alt="preview"
+            className={`object-cover w-full h-full transition-all duration-500 ${
+              isImageLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
+            }`}
+            onError={() => setIsImageLoading(false)}
+          />
         </div>
       </div>
+      
+      {/* CSS Animations */}
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-8px); }
+        }
+        
+        @keyframes diamond-rotate {
+          0% { 
+            transform: rotate(0deg);
+            border-color: #cfa355;
+          }
+          25% { 
+            transform: rotate(90deg);
+            border-color: #f4d03f;
+          }
+          50% { 
+            transform: rotate(180deg);
+            border-color: #f39c12;
+          }
+          75% { 
+            transform: rotate(270deg);
+            border-color: #e67e22;
+          }
+          100% { 
+            transform: rotate(360deg);
+            border-color: #cfa355;
+          }
+        }
+        
+        @keyframes diamond-inner {
+          0%, 100% { 
+            transform: rotate(0deg) scale(1);
+            opacity: 0.1;
+          }
+          50% { 
+            transform: rotate(180deg) scale(1.1);
+            opacity: 0.3;
+          }
+        }
+        
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+      `}</style>
     </section>
   );
 }

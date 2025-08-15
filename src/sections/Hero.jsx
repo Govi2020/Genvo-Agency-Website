@@ -15,7 +15,7 @@ function Hero() {
     <section id="home" className="flex flex-col justify-end overflow-x-hidden min-h-screen">
       <AnimatedHeaderSection
         subTitle={"Website Solutions Agency"}
-        title={"Gevano"}
+        title={"Genvo"}
         text={aboutText}
         textColor={"black"}
         withScrollTrigger={false}

@@ -57,7 +57,7 @@ export const servicesData = [
       {
         title: "Penetration Testing & Monitoring",
         description:
-          "Simulated Attacks, API Lockdown, Real-time Threat Monitoring",
+          "Simulated Attacks, API Testing, Manual Bug Bounty Testing",
       },
     ],
   },
@@ -68,21 +68,21 @@ export const projects = [
     id: 1,
     name: "Easy Bank Landing page",
     description:
-      "Bank website landing page which is respoinsive for any device size",
-    link: "",
+      "Bank website landing page which is responsive for any device size",
+    link: "https://easybank-landing-page-tailwind.netlify.app/",
     image: "/assets/projects/easy_bank.png",
     bgImage: "/assets/backgrounds/blanket.jpg",
     frameworks: [
       { id: 1, name: "Vite" },
-      { id: 2, name: "Vannila JS" },
+      { id: 2, name: "Vanilla JS" },
       { id: 5, name: "Tailwind CSS" },
     ],
   },
   {
-    id: 5,
+    id: 2,
     name: "Music Listening App",
     description: "A website which integrates shazam's API deliver songs",
-    link: "",
+    link: "https://music-lyriks.vercel.app/",
     image: "/assets/projects/music-app.png",
     bgImage: "/assets/backgrounds/table.jpg",
     frameworks: [
@@ -93,24 +93,24 @@ export const projects = [
     ],
   },
   {
-    id: 6,
+    id: 3,
     name: "Team Manager Landing Page",
     description:
       "Landing Page with emphasizes the simplicity such a large just needs for a landing page",
-    link: "",
+    link: "https://manage-landing-page-tailwind.netlify.app/",
     image: "/assets/projects/manage.png",
     bgImage: "/assets/backgrounds/curtains.jpg",
     frameworks: [
-      { id: 1, name: "Vannila Js" },
+      { id: 1, name: "Vanilla Js" },
       { id: 2, name: "TailwindCSS" },
     ],
   },
   {
-    id: 3,
+    id: 4,
     name: "Social Media Application",
     description:
       "A Social Media Platform with all of it's bare bone features and live chatting with web sockets",
-    link: "",
+    link: "https://govi-social.netlify.app/",
     image: "/assets/projects/social_media.png",
     bgImage: "/assets/backgrounds/map.jpg",
     frameworks: [
@@ -122,11 +122,11 @@ export const projects = [
     ],
   },
   {
-    id: 2,
+    id: 5,
     name: "File Sharing App",
     description:
       "A full stack app which uses best practices both on front and backend with stat's for the user",
-    link: "",
+    link: "https://g-share.vercel.app/",
     image: "/assets/projects/g_share.png",
     bgImage: "/assets/backgrounds/curtains.jpg",
     frameworks: [
@@ -138,11 +138,11 @@ export const projects = [
     ],
   },
   {
-    id: 4,
+    id: 6,
     name: "Personal Portfolio",
     description:
-      "Personal portfolio which eligantly highlighs a persons experience and passion",
-    link: "",
+      "Personal portfolio which elegantly highlights a persons experience and passion",
+    link: "https://govi2020-profolio.vercel.app/",
     image: "/assets/projects/portfolio.png",
     bgImage: "/assets/backgrounds/poster.jpg",
     frameworks: [
