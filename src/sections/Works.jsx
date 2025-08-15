@@ -146,7 +146,11 @@ export default function Works() {
   }, []);
 
   return (
-    <section id="work" className="flex flex-col min-h-screen">
+    <section 
+      id="work" 
+      className="flex flex-col min-h-screen"
+      aria-labelledby="works-title"
+    >
       <AnimatedHeaderSection
         subTitle={"Logic meets Aesthetics, Seamlessly"}
         title={"Works"}
@@ -159,32 +163,44 @@ export default function Works() {
         className="relative flex flex-col font-light"
         onMouseMove={handleMouseMove}
         id="project-list"
+        role="list"
+        aria-label="Portfolio projects showcase"
       >
         {project.map((project, index) => {
           return (
-            <a
+            <article
               key={project.id}
               ref={(el) => (projectRef.current[index] = el)}
               onMouseEnter={() => handleMouseEnter(index)}
               onMouseLeave={() => handleMouseLeave(index)}
-              href={project.link}
-              id="project"
               className="relative flex cursor-pointer flex-col gap-1 py-5 group md:gap-0"
+              role="listitem"
             >
               {/* Overlay */}
               <div
                 ref={(el) => (overlayRef.current[index] = el)}
                 className="absolute inset-0 hidden duration-200 bg-black -z-10 clip-path md:block"
+                aria-hidden="true"
               />
 
               {/* Title */}
-              <div className="flex justify-between px-10 text-black transition-all duration-500 md:group-hover:px-12 md:group-hover:text-white">
-                <h2 className="lg:text-[32px] text-[26px]">{project.name}</h2>
+              <header className="flex justify-between px-10 text-black transition-all duration-500 md:group-hover:px-12 md:group-hover:text-white">
+                <h2 className="lg:text-[32px] text-[26px]">
+                  <a 
+                    href={project.link || "#"} 
+                    className="hover:underline focus:outline-none focus:ring-2 focus:ring-black focus:ring-offset-2"
+                    aria-label={`View ${project.name} project details`}
+                  >
+                    {project.name}
+                  </a>
+                </h2>
                 <Icon
                   icon="lucide:arrow-up-right"
                   className="md:size-6 size-5"
+                  aria-hidden="true"
                 />
-              </div>
+              </header>
+              
               {/* Divider */}
               <div className="w-full h-0.5 bg-black/80" />
 
@@ -192,12 +208,12 @@ export default function Works() {
               <div className="flex flex-wrap px-10 text-xs leading-loose uppercase transition-all duration-500 md:text-sm gap-x-5 md:group-hover:px-12">
                 {project.frameworks.map((framework) => {
                   return (
-                    <p
+                    <span
                       key={framework.id}
                       className="text-black transition-colors duration-500 md:group-hover:text-white"
                     >
                       {framework.name}
-                    </p>
+                    </span>
                   );
                 })}
               </div>
@@ -206,16 +222,20 @@ export default function Works() {
               <div className="relative flex overflow-hidden items-center justify-center px-10 md:hidden h-[400px]">
                 <img
                   src={project.bgImage}
-                  alt={`${project.name}-bg-image`}
+                  alt={`${project.name} background image`}
                   className="object-cover w-full h-full rounded-md brightness-50"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <img
                   src={!isBadConnection ? project.image : project.image.replace(".png", "-min.png").replace(".jpg", "-min.jpg").replace(".jpeg", "-min.jpeg")}
-                  alt={`${project.name}-bg-image`}
+                  alt={`${project.name} project preview`}
                   className="bg-center absolute inset-0 top-20 sm:px-14 rounded-xl"
+                  loading="lazy"
+                  decoding="async"
                 />
               </div>
-            </a>
+            </article>
           );
         })}
 
@@ -223,6 +243,7 @@ export default function Works() {
         <div
           ref={previewRef}
           className="fixed -top-0 left-0 z-50 overflow-hidden border-8 border-black pointer-events-none w-[960px] md:block hidden opacity-0"
+          aria-hidden="true"
         >
           {/* Skeleton Loading */}
           {isImageLoading && (
@@ -265,11 +286,13 @@ export default function Works() {
           <img
             ref={previewImgRef}
             src=""
-            alt="preview"
+            alt="Project preview"
             className={`object-cover w-full h-full transition-all duration-500 ${
               isImageLoading ? 'opacity-0 scale-95' : 'opacity-100 scale-100'
             }`}
             onError={() => setIsImageLoading(false)}
+            loading="lazy"
+            decoding="async"
           />
         </div>
       </div>
