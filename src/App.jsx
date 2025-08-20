@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef} from "react";
 import NavBar from "./sections/Navbar";
 import Hero from "./sections/Hero";
 import ServiceSummary from "./sections/ServiceSummary";
@@ -10,11 +10,13 @@ import gsap from "gsap";
 import CustomCursor from "./components/CustomCursor";
 import ContactSummary from "./sections/ContactSummary";
 import Contact from "./sections/Contact";
+import LoadingScreen from "./components/LoadingScreen";
 
 function App() {
   return (
     <ReactLenis root>
       {" "}
+      <LoadingScreen/>
       <CustomCursor />
       <NavBar />
       <Hero />

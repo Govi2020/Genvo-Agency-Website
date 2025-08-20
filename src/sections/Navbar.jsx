@@ -73,6 +73,7 @@ function NavBar() {
 
   useEffect(() => {
     let lastScrollY = window.scrollY;
+    setIsTop(document.getElementsByTagName("html").scrollTop < 40);
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
 
