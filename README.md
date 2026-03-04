@@ -1,7 +1,5 @@
 # Genvo Agency Website
 
-add a image here
-
 ![Screen Shot](/ScreenShot.png)
 
 A marketing/agency landing site built with React, Vite and Tailwind CSS. This repository contains the frontend for a visually rich portfolio and services site, including animated components, a custom cursor, and sections for services, works, and contact.
